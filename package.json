@@ -1,0 +1,19 @@
+{
+  "name": "tinyapp",
+  "version": "1.0.0",
+  "description": "A full stack web app built with Node and Express that allows users to shorten long URLs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DTran23/tiny-app.git"
+  },
+  "author": "Daniel Tran",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DTran23/tiny-app/issues"
+  },
+  "homepage": "https://github.com/DTran23/tiny-app#readme"
+}
