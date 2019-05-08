@@ -29,6 +29,10 @@ app.get("/urls.json", (req, res) => {
   res.json(urlDatabase);
 });
 
+app.get("/urls/:shortURL", (req, res) => {
+  let templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL] };
+  res.render("urls_show", templateVars);
+});
 
 app.get("/hello", (req, res) => {
   res.send("<html><body>Hello <b>World</b></body></html>\n");
@@ -36,19 +40,3 @@ app.get("/hello", (req, res) => {
 
 
 
-// server.js
-
-// index page
-// app.get('/', function(req, res) {
-//     var drinks = [
-//         { name: 'Bloody Mary', drunkness: 3 },
-//         { name: 'Martini', drunkness: 5 },
-//         { name: 'Scotch', drunkness: 10 }
-//     ];
-//     var tagline = "Any code of your own that you haven't looked at for six or more months might as well have been written by someone else.";
-
-//     res.render('pages/index', {
-//         drinks: drinks,
-//         tagline: tagline
-//     });
-// });
