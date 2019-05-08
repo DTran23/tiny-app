@@ -12,10 +12,11 @@
     <h1>TinyApp</h1>
     <a href ="#"> Create a new tinyURL</a>
     <h2>My URL</h2>
-    <ul>
       <% for (let url in urls){ %>
-      <li><strong> <%= `${url}:` %> </strong> <%= `${urls[url]}` %> </li>
+      <form method="POST" action="/urls/b2xVn2/delete"> <strong><%= url %>:</strong> <%= urls[url]%>
+        <button type="submit" class="btn btn-primary">Delete</button>
+      </form><br>
+
       <% }; %>
-    </ul>
 </body>
 </html>
