@@ -9,10 +9,11 @@
   <title>TinyApp</title>
 </head>
 <body style="font-size:20px; padding:50px;">
-    <h1>TinyApp</h1>
-    <a href ="#"> Create a new tinyURL</a>
-
-    <h4>Tiny URLs for <%= longURL %> </h4>
+    <h4>TinyURL for <%= longURL %> </h4>
+    <form method="POST" action="/urls/:id">
+      <input class="form-control" type="text" name="longURL" placeholder="http://" style="width: 300px; margin-bottom: 20px">
+      <button type="submit" class="btn btn-primary">Update</button>
+    </form><br>
     <p> Your Tiny URL: <a href = "<%= longURL %>"> <%= shortURL %> </a></p>
 </body>
 </html>
