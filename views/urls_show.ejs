@@ -9,12 +9,12 @@
   <title>TinyApp</title>
 </head>
 <body style="font-size:20px; padding:50px;">
-    <h4>TinyURL for <%= longURL %> </h4>
-   <form method="POST" action="/urls/<%= shortURL %>">
-
-      <input class="form-control" type="text" name="longURL" placeholder="http://" style="width: 300px; margin-bottom: 20px">
-      <button type="submit" class="btn btn-primary">Update</button>
-    </form><br>
+  <% include partials/_header %>
+  <h4>TinyURL for <%= longURL %> </h4>
+  <form method="POST" action="/urls/<%= shortURL %>">
+    <input class="form-control" type="text" name="longURL" placeholder="http://" style="width: 300px; margin-bottom: 20px">
+    <button type="submit" class="btn btn-primary">Update</button>
+  </form><br>
     <p> Your Tiny URL: <a href = "<%= longURL %>"> <%= shortURL %> </a></p>
 </body>
 </html>
