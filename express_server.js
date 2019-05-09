@@ -13,9 +13,24 @@ app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
 
-var urlDatabase = {
+//database for urls
+const urlDatabase = {
   "b2xVn2": "http://www.lighthouselabs.ca",
   "9sm5xK": "http://www.google.com"
+};
+
+//database for users
+const users = {
+  "userRandomID": {
+    id: "userRandomID",
+    email: "user@example.com",
+    password: "purple-monkey-dinosaur"
+  },
+ "user2RandomID": {
+    id: "user2RandomID",
+    email: "user2@example.com",
+    password: "dishwasher-funk"
+  }
 };
 
 
@@ -59,11 +74,23 @@ app.get("/urls/:shortURL", (req, res) => {
   res.render("urls_show", templateVars);
 });
 
-//endpoint for register page
+//GET endpoint for register page
 app.get("/register", (req, res) => {
   res.render("register")
 });
 
+//POST endpoint for registration
+app.post("/register", (req, res) => {
+  const user = { id: generateRandomString(), email: '', password: '' }
+  users.user = user;
+
+  if(user.email === "" && user.password === ""){
+    res.status(400)
+  }
+  res.cookie('user_id', users.user.id);
+  res.redirect("/urls");
+
+});
 
 app.post("/urls", (req, res) => {
   const shortURL = generateRandomString();
@@ -71,7 +98,6 @@ app.post("/urls", (req, res) => {
 
   urlDatabase[shortURL] = longURL;
   res.status(200);
-
   res.redirect(`/urls/${shortURL}`);
 });
 
