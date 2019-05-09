@@ -81,13 +81,20 @@ app.get("/register", (req, res) => {
 
 //POST endpoint for registration
 app.post("/register", (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
   const user = { id: generateRandomString(), email: '', password: '' }
-  users.user = user;
+  users[user.id] = user;
 
-  if(user.email === "" && user.password === ""){
-    res.status(400)
+  if(users[user.id].email === "" || users[user.id].password === ""){
+    res.status(400);
   }
-  res.cookie('user_id', users.user.id);
+
+  if(email === users[user.id].email){
+    res.status(400);
+  }
+
+  res.cookie('user_id', users[user.id].id);
   res.redirect("/urls");
 
 });
@@ -129,3 +136,12 @@ app.post("/logout", (req, res) => {
 function generateRandomString() {
   return  Math.random().toString(36).substring(2,8)
 }
+
+const lookup = () => {
+  const userEmail = users.user.email;
+
+  if(userEmail === req.body.email){
+    return res.status(400);
+  }
+}
+
