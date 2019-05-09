@@ -8,15 +8,32 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
   <title>TinyApp</title>
 </head>
-<body style="font-size:20px; padding:50px;">
+<body>
   <% include partials/_header %>
-    <a href ="#"> Create a new tinyURL</a>
-    <h2>My URL</h2>
-    <% for (let url in urls){ %>
-      <form method="POST" action="/urls/<%= url %>/delete"> <strong><%= url %>:</strong> <%= urls[url]%>
-        <a href ="/urls/<%= url %>">Edit</a>
-        <button type="submit" class="btn btn-primary">Delete</button>
-      </form><br>
-    <% }; %>
+  <div class="container">
+  <table class="table table-hover shadow-sm rounded">
+      <thead class="rounded">
+        <tr>
+        <th>ShortURL</th>
+        <th class="longURL">LongURL</th>
+        <th class="options">Options</th>
+      </tr>
+      </thead>
+        <% for (let url in urls){ %>
+      <tbody">
+        <form method="POST" action="/urls/<%= url %>/delete">
+          <td><%= url %></td>
+          <td><%= urls[url]%></td>
+          <td>
+            <a class="btn btn-primary btn-md" href ="/urls/<%= url %>">Edit</a>
+            <button type="submit" class="btn btn-danger btn-md">Delete</button>
+          </td>
+        </form>
+      </tbody>
+        <% }; %>
+
+  </table>
+</div>
+
 </body>
 </html>

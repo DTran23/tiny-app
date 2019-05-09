@@ -6,14 +6,27 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
   <title>TinyApp</title>
+  <style>
+    .form-content {
+      background-color: #fff;
+      border-radius: 5px;
+      padding: 40px 20px;
+    }
+    .form-content h5{
+      padding-bottom: 10px;
+    }
+  </style>
 </head>
-<body style="font-size:20px; padding:50px;">
+<body>
   <% include partials/_header %>
-    <h4>TinyURL for <%= longURL %> </h4>
-    <form method="POST" action="/urls/<%= shortURL %>">
-      <input class="form-control" type="text" name="longURL" placeholder="http://" style="width: 300px; margin-bottom: 20px">
-      <button type="submit" class="btn btn-primary">Update</button>
-    </form><br>
-    <p> Your Tiny URL: <a href = "<%= longURL %>"> <%= shortURL %> </a></p>
+  <div class="container">
+    <div class="form-content">
+      <h5>Your TinyURL: <a href = "<%= longURL %>"> <%= shortURL %></a> for <%= longURL %> </h5>
+      <form class="form-inline" method="POST" action="/urls/<%= shortURL %>">
+        <input class="form-control" type="text" name="longURL" placeholder="Enter new link to update your TinyURL" style="width: 500px;">
+        <button type="submit" class="btn btn-primary btn-lg">Update</button>
+      </form>
+    </div>
+  </div>
 </body>
 </html>

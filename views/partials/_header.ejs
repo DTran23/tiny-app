@@ -1,15 +1,164 @@
-<h1>Tiny App</h1>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Header Partial</title>
+ <link href="https://fonts.googleapis.com/css?family=Bungee|Righteous" rel="stylesheet">
+</head>
+<body>
+<style>
+body {
+font-size: 20px;
+color: #102a4f;
+padding: 50px;
+background: #d5f2f6; /* Old browsers */
+background: -moz-linear-gradient(-45deg, #d5f2f6 0%, #c6e5e8 50%, #d3f2f5 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(-45deg, #d5f2f6 0%,#c6e5e8 50%,#d3f2f5 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(135deg, #d5f2f6 0%,#c6e5e8 50%,#d3f2f5 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+height: 100vh;
+}
+.container {
+  width: 1000px;
+}
+.display-1 {
+  color: #fff;
+  font-family: 'Righteous', cursive;
 
-<% if(username) { %>
-  <form method="POST" action="/logout">
-    <p>Logged in as: <%= username %></p>
-    <button type="submit" class="btn btn-primary">Logout</button>
-  </form><br>
+}
+.logo {
+  margin-left: 20px;
+}
+.logo p {
+  color: #e8f0fa;
+  font-size: 32px;
+  margin: -10px 0px 0px 20px;
+}
+a:hover {
+  text-decoration: none;
+}
 
-<% } else { %>
-  <form method="POST" action="/login">
-    <label for="username">Username:</label><br>
-    <input  type="text" name="username" placeholder="Enter your username" style="width: 300px; margin-bottom: 20px">
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form><br>
-<% } %>
+thead {
+  background-color: #21254f;
+  color: #fff;
+}
+.navbar {
+  background-color: #21254f;
+  border-radius: 10px;
+  margin-bottom: 40px;
+  padding: 20px 20px;
+  background-image: url(https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/artificial_intelligence_upfn.svg);
+  background-position: -80% 42%;
+  height: 280px;
+  display: flex;
+}
+.form-control {
+  width: 200px
+  margin: 0px 10px;
+}
+.btn-danger {
+  background-color: #fa6883;
+}
+.btn-danger:hover {
+  background-color: #dd435f;
+}
+.btn:focus {
+  outline: none;
+}
+.btn {
+  border: none;
+}
+.btn-primary {
+  background-color: #00b7eb;
+}
+.btn-primary:hover {
+  background-color: #00a0e3;
+}
+.btn-primary, .btn-danger {
+  width: 120px;
+  margin-left: 10px;
+}
+.long-url {
+  padding-left: 40px;
+}
+.table-hover tbody tr:hover td {
+    background: #e8f0fa;
+}
+.btn-info {
+  background-color: #fea710;
+}
+.img-thumbnail {
+  background-color: #102a4f;
+}
+.avatar{
+/*  display:flex;
+  margin-right: 20px;
+  justify-content: baseline;*/
+}
+.logout {
+  width: 180px;
+  height: 60px;
+  align-content: bottom;
+  padding: 0px 0px;
+}
+.login-description {
+  color: #fff;
+  margin-bottom: 0px;
+  font-size: 14px;
+}
+.login-name {
+  text-transform: uppercase;
+  font-family: 'Righteous', cursive;
+  color: #fff;
+  font-size: 30px;
+  margin-top: -5px;
+}
+
+.btn.btn-primary.logout {
+  border: 0px;
+  margin-left: 0px;
+}
+.table {
+  background-color: #f7f7f7;
+}
+.table th, .table td {
+  padding-left: 50px;
+}
+th.options {
+  padding-left: 70px;
+}
+</style>
+
+<div class="container">
+  <nav class="navbar navbar-inverse">
+    <div class="logo">
+    <a href="/urls"><h1 class="display-1">Tiny App</h1></a>
+    <p class="display-4">Shorten your URLs</p>
+  </div>
+    <% if(username) { %>
+
+      <form class="form-inline" method="POST" action="/logout">
+
+
+             <div class="name">
+              <p class="login-description">Logged in as</p>
+              <p class="login-name"><%= username %></p>
+              <button type="submit" class="btn btn-primary logout">Logout</button>
+            </div>
+
+
+      </form>
+
+    <% } else { %>
+      <form class="form-inline" method="POST" action="/login">
+        <div class="form-group">
+        <input  type="text" class="form-control" name="username" placeholder="Enter your username">
+        <button type="submit" class="btn btn-primary">Login</button>
+      </div>
+      </form>
+    <% } %>
+  </nav>
+  <!-- static button for creating new TinyURL -->
+  <a class="btn btn-success btn-lg" href ="/urls/new" style="margin-bottom: 20px"> Create a new tinyURL</a>
+
+</div>
+</body>
+</html>
