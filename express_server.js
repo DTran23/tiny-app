@@ -1,8 +1,8 @@
-var express = require("express");
-var app = express();
-var PORT = 8080; // default port 8080
+const express = require("express");
+const app = express();
+const PORT = 8080; // default port 8080
 const bodyParser = require("body-parser");
-var cookieParser = require("cookie-parser");
+const cookieParser = require("cookie-parser");
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
@@ -83,14 +83,14 @@ app.get("/register", (req, res) => {
 app.post("/register", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
-  const user = { id: generateRandomString(), email: '', password: '' }
+  const user = { id: generateRandomString(), email: req.body.email, password: req.body.password }
   users[user.id] = user;
 
   if(users[user.id].email === "" || users[user.id].password === ""){
     res.status(400);
   }
 
-  if(email === users[user.id].email){
+  if(emailLookup(email, users) === true){
     res.status(400);
   }
 
@@ -132,16 +132,16 @@ app.post("/logout", (req, res) => {
 });
 
 
+const generateRandomString = () => {
+  return  Math.random().toString(36).substring(2,8);
+};
 
-function generateRandomString() {
-  return  Math.random().toString(36).substring(2,8)
-}
 
-const lookup = () => {
-  const userEmail = users.user.email;
-
-  if(userEmail === req.body.email){
-    return res.status(400);
-  }
-}
+const emailLookup = (emailInfo, database) => {
+  for(let user in database){
+    if(database[user].email === emailInfo){
+      return true;
+    };
+  };
+};
 
