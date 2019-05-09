@@ -1,1 +1,7 @@
-<h1>TinyApp</h1>
+<h1>Tiny App</h1>
+<form method="POST" action="/login">
+  <label for="username">Username:</label><br>
+  <input  type="text" name="username" placeholder="Enter your username" style="width: 300px; margin-bottom: 20px">
+  <p>You are logged in as: <%= username %></p>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form><br>
