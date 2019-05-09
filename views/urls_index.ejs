@@ -12,12 +12,11 @@
   <% include partials/_header %>
     <a href ="#"> Create a new tinyURL</a>
     <h2>My URL</h2>
-      <% for (let url in urls){ %>
+    <% for (let url in urls){ %>
       <form method="POST" action="/urls/<%= url %>/delete"> <strong><%= url %>:</strong> <%= urls[url]%>
         <a href ="/urls/<%= url %>">Edit</a>
         <button type="submit" class="btn btn-primary">Delete</button>
       </form><br>
-
-      <% }; %>
+    <% }; %>
 </body>
 </html>
