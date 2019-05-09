@@ -59,6 +59,11 @@ app.get("/urls/:shortURL", (req, res) => {
   res.render("urls_show", templateVars);
 });
 
+//endpoint for register page
+app.get("/register", (req, res) => {
+  res.render("register")
+});
+
 
 app.post("/urls", (req, res) => {
   const shortURL = generateRandomString();

@@ -20,7 +20,7 @@
 <body>
   <% include partials/_header %>
   <div class="container">
-    <div class="form-content">
+    <div class="form-content shadow-sm">
       <h5>Your TinyURL: <a href = "<%= longURL %>"> <%= shortURL %></a> for <%= longURL %> </h5>
       <form class="form-inline" method="POST" action="/urls/<%= shortURL %>">
         <input class="form-control" type="text" name="longURL" placeholder="Enter new link to update your TinyURL" style="width: 500px;">
