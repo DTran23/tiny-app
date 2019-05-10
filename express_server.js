@@ -54,7 +54,13 @@ app.get("/urls", (req, res) => {
 
 app.get("/urls/new", (req, res) => {
   const loginId = {username: req.cookies['user_id']};
+
+
+  if(req.cookies.user_id === undefined){
+    res.redirect("/login")
+  }
   res.render("urls_new", loginId);
+
 });
 
 
@@ -70,8 +76,18 @@ app.get("/u/:shortURL", (req, res) => {
 
 
 app.get("/urls/:shortURL", (req, res) => {
-  let templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL], username: usersDatabase[id]};
-  res.render("urls_show", templateVars);
+  let templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL], username: req.cookies['user_id']};
+  // if(req.cookies.user_id !== urlDatabase[req.params.id].id){
+  //   res.redirect("/login")
+  // } else {
+  // }
+
+  if(req.cookies.user_id.id === undefined){
+    res.redirect('/login')
+  } else {
+    res.render("urls_show", templateVars);
+  }
+
 });
 
 
@@ -110,8 +126,6 @@ app.post("/register", (req, res) => {
   }
 
   usersDatabase[id] = user;
-
-  console.log(usersDatabase);
 
   res.cookie('user_id', usersDatabase[id]);
   res.redirect("/urls");
@@ -158,11 +172,11 @@ app.post("/login", (req, res) => {
 
   if (foundUser) {
     res.cookie('user_id', user_id);
-        res.redirect('/urls');
-      } else {
-        res.sendStatus(403)
-        res.redirect('/login');
-      }
+    res.redirect('/urls');
+  } else {
+    res.sendStatus(403)
+    res.redirect('/login');
+  }
 });
 
 //logout
