@@ -77,10 +77,6 @@ app.get("/u/:shortURL", (req, res) => {
 
 app.get("/urls/:shortURL", (req, res) => {
   let templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL], username: req.cookies['user_id']};
-  // if(req.cookies.user_id !== urlDatabase[req.params.id].id){
-  //   res.redirect("/login")
-  // } else {
-  // }
 
   if(req.cookies.user_id.id === undefined){
     res.redirect('/login')

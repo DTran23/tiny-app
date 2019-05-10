@@ -11,6 +11,11 @@
 <body>
   <% include partials/_header %>
   <div class="container">
+ <% if(!username) { %>
+  <div class="login-message shadow-sm">
+    <th>Please log in or register </th>
+  </div>
+     <% } else { %>
   <table class="table table-hover shadow-sm rounded">
       <thead class="rounded">
         <tr>
@@ -21,6 +26,7 @@
       </thead>
         <% for (let url in urls){ %>
       <tbody">
+
         <form method="POST" action="/urls/<%= url %>/delete">
           <td><%= url %></td>
           <td><%= urls[url].longURL %></td>
@@ -30,6 +36,9 @@
           </td>
         </form>
       </tbody>
+    <% } %>
+
+
         <% }; %>
 
   </table>
