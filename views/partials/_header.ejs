@@ -131,18 +131,14 @@ th.options {
     <a href="/urls"><h1 class="display-1">Tiny App</h1></a>
     <p class="display-4">Shorten your URLs</p>
   </div>
+
     <% if(username) { %>
-
       <form class="form-inline" method="POST" action="/logout">
-
-
-             <div class="name">
-              <p class="login-description">Logged in as</p>
-              <p class="login-name"><%= username %></p>
-              <button type="submit" class="btn btn-primary logout">Logout</button>
-            </div>
-
-
+         <div class="name">
+          <p class="login-description">Logged in as</p>
+          <p class="login-name"><%= username.email %></p>
+          <button type="submit" class="btn btn-primary logout">Logout</button>
+        </div>
       </form>
 
     <% } else { %>
@@ -154,6 +150,8 @@ th.options {
       </form>
     <% } %>
   </nav>
+
+
   <!-- static button for creating new TinyURL -->
   <a class="btn btn-success btn-lg" href ="/urls/new" style="margin-bottom: 20px"> Create a new tinyURL</a>
 
