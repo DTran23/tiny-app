@@ -142,12 +142,11 @@ th.options {
       </form>
 
     <% } else { %>
-      <form class="form-inline user-login" method="POST" action="/login">
-        <div class="form-group">
-        <input  type="text" class="form-control" name="username" placeholder="Enter your username">
-        <button type="submit" class="btn btn-primary">Login</button>
+      <div class="user-login">
+        <a href="/register" class="btn btn-primary">Register</a>
+        <a href="/login" class="btn btn-primary">Login</a>
+
       </div>
-      </form>
     <% } %>
   </nav>
 

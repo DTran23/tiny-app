@@ -33,6 +33,7 @@ const usersDatabase = {
   }
 };
 
+//Get endpoints =================================
 
 app.get("/", (req, res) => {
   res.send("Hello!");
@@ -52,7 +53,7 @@ app.get("/urls", (req, res) => {
 
 
 app.get("/urls/new", (req, res) => {
-  const loginId = {username: usersDatabase[id]};
+  const loginId = {username: req.cookies['user_id']};
   res.render("urls_new", loginId);
 });
 
@@ -73,12 +74,24 @@ app.get("/urls/:shortURL", (req, res) => {
   res.render("urls_show", templateVars);
 });
 
-//GET endpoint for register page
+
+//register page
 app.get("/register", (req, res) => {
-  res.render("register")
+  const registerInfo = {username: req.cookies['user_id']};
+  res.render("register", registerInfo)
 });
 
-//POST endpoint for registration
+//login page
+app.get("/login", (req, res) => {
+  const loginInfo = {username: req.cookies['user_id']};
+  res.render("login", loginInfo)
+});
+
+
+//POST endpoints =================================
+
+
+//Register, adds new users to the database
 app.post("/register", (req, res) => {
   const {email, password} = req.body;
   const id = generateRandomString();
@@ -98,12 +111,14 @@ app.post("/register", (req, res) => {
 
   usersDatabase[id] = user;
 
+  console.log(usersDatabase);
 
   res.cookie('user_id', usersDatabase[id]);
   res.redirect("/urls");
 
 });
 
+//adds short and long URL to database and redirects to corresponding shortURL page
 app.post("/urls", (req, res) => {
   const shortURL = generateRandomString();
   const longURL = req.body.longURL;
@@ -120,28 +135,51 @@ app.post("/urls/:id", (req, res) => {
   res.redirect("/urls");
 });
 
-
+//delete shortURL from url list
 app.post("/urls/:shortURL/delete", (req, res) => {
   delete urlDatabase[req.params.shortURL];
   res.redirect("/urls");
 });
 
+//login with user email and password checks
 app.post("/login", (req, res) => {
-  res.cookie('user_id', usersDatabase[id]);
-  res.redirect('/urls');
+  const {email, password} = req.body;
+  let user_id;
+  let foundUser = false;
+
+  for(let user in usersDatabase){
+    if(email === usersDatabase[user].email){
+      if (password === usersDatabase[user].password) {
+        user_id = usersDatabase[user];
+        foundUser = true;
+      }
+    }
+  }
+
+  if (foundUser) {
+    res.cookie('user_id', user_id);
+        res.redirect('/urls');
+      } else {
+        res.sendStatus(403)
+        res.redirect('/login');
+      }
 });
 
+//logout
 app.post("/logout", (req, res) => {
   res.clearCookie('user_id')
   res.redirect('/urls');
 });
 
+//Helper functions =================================
 
+
+//Random string generator
 const generateRandomString = () => {
   return Math.random().toString(36).substring(2,8);
 };
 
-
+//Check for email in database
 const emailLookup = (emailInfo) => {
   for(let user in usersDatabase) {
     if(usersDatabase[user].email === emailInfo){
