@@ -131,14 +131,15 @@ th.options {
 
 <div class="container">
   <nav class="navbar navbar-inverse">
+    <!-- logo and tagline -->
     <div class="logo">
-    <a href="/urls"><h1 class="display-1">Tiny App</h1></a>
-    <p class="display-4">Shorten your URLs</p>
-  </div>
-
+      <a href="/urls"><h1 class="display-1">Tiny App</h1></a>
+      <p class="display-4">Shorten your URLs</p>
+    </div>
+    <!-- if username exists, show login info else show login, register link -->
     <% if(username) { %>
       <form class="form-inline" method="POST" action="/logout">
-         <div class="name">
+        <div class="name">
           <p class="login-description">Logged in as</p>
           <p class="login-name"><%= username.email %></p>
           <button type="submit" class="btn btn-primary logout">Logout</button>
@@ -149,7 +150,6 @@ th.options {
       <div class="user-login">
         <a href="/register" class="btn btn-primary">Register</a>
         <a href="/login" class="btn btn-primary">Login</a>
-
       </div>
     <% } %>
   </nav>

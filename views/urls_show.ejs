@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-  <title>TinyApp</title>
+
+  <title>TinyApp - A URL shortening App</title>
+
   <style>
     .form-content {
       background-color: #fff;
@@ -16,12 +18,17 @@
       padding-bottom: 10px;
     }
   </style>
+
 </head>
+
 <body>
+
   <% include partials/_header %>
+
   <div class="container">
     <div class="form-content shadow-sm">
-      <h5>Your TinyURL: <a href = "<%= longURL %>"> <%= shortURL %></a> for <%= longURL.longURL %> </h5>
+      <h5>Your TinyURL: <a href = "<%= longURL.longURL %>"> <%= shortURL %></a> for <%= longURL.longURL %> </h5>
+        <!-- POST FORM for updating longURLs -->
       <form class="form-inline" method="POST" action="/urls/<%= shortURL %>">
         <input class="form-control" type="text" name="longURL" placeholder="Enter new link to update your TinyURL" style="width: 500px;">
         <button type="submit" class="btn btn-primary btn-lg">Update</button>

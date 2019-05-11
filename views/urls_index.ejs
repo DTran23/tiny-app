@@ -4,44 +4,53 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
   <title>TinyApp - A URL shortening App</title>
+
 </head>
 <body>
+
   <% include partials/_header %>
+
   <div class="container">
- <% if(!username) { %>
-  <div class="login-message shadow-sm">
-    <th>Please log in or register </th>
-  </div>
-     <% } else { %>
-  <table class="table table-hover shadow-sm rounded">
+  <!-- if no username, display login message -->
+    <% if(!username) { %>
+      <div class="login-message shadow-sm">
+        <th>Please log in or register </th>
+      </div>
+    <% } else { %>
+
+  <!-- show table of URLs -->
+    <table class="table table-hover shadow-sm rounded">
       <thead class="rounded">
         <tr>
         <th>ShortURL</th>
         <th class="longURL">LongURL</th>
         <th class="options">Options</th>
-      </tr>
+        </tr>
       </thead>
-        <% for (let url in urls){ %>
-        <% if(urls[url].userId === username.id) { %>
-      <tbody">
-        <form method="POST" action="/urls/<%= url %>/delete">
-          <td><%= url %></td>
-          <td><%= urls[url].longURL %></td>
-          <td>
-            <a class="btn btn-primary btn-md" href ="/urls/<%= url %>">Edit</a>
-            <button type="submit" class="btn btn-danger btn-md">Delete</button>
-          </td>
-        </form>
-      </tbody>
-        <% } %>
-    <% } %>
-      <% }; %>
 
-  </table>
-</div>
+    <!-- display URLs in table format -->
+      <% for (let url in urls) { %>
+        <% if(urls[url].userId === username.id) { %>
+          <tbody">
+            <form method="POST" action="/urls/<%= url %>/delete">
+              <td><%= url %></td>
+              <td><%= urls[url].longURL %></td>
+              <td>
+                <a class="btn btn-primary btn-md" href ="/urls/<%= url %>">Edit</a>
+                <button type="submit" class="btn btn-danger btn-md">Delete</button>
+              </td>
+            </form>
+          </tbody>
+        <% } %>
+      <% } %> <!-- end of loop -->
+    </table>
+    <% }; %> <!-- end of conditional -->
+  </div>
 
 </body>
 </html>
