@@ -142,12 +142,6 @@ app.post("/urls/:shortURL/delete", (req, res) => {
 //Register, adds new users to the database
 app.post("/register", (req, res) => {
   const {email, password} = req.body;
-  const id = generateRandomString();
-  const user = {
-    id,
-    email,
-    password,
-  };
 
   if(email === "" || password === ""){
     res.sendStatus(400);
@@ -157,9 +151,9 @@ app.post("/register", (req, res) => {
     res.sendStatus(400);
   }
 
-  usersDatabase[id] = user;
+  const userId = addNewUser(email, password);
 
-  res.cookie('user_id', usersDatabase[id]);
+  res.cookie('user_id', userId);
   res.redirect("/urls");
 
 });
@@ -214,6 +208,21 @@ const emailLookup = (emailInfo) => {
   }
   return false;
 };
+
+//Add new users
+const addNewUser = (email, password) => {
+  const id = generateRandomString();
+
+  const user = {
+    id,
+    email,
+    password,
+  }
+
+  usersDatabase[id] = user;
+
+  return id;
+}
 
 // const urlsForUser = (id) => {
 //   let url = [];
