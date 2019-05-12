@@ -8,13 +8,13 @@ const cookieSession = require('cookie-session');
 
 
 app.set("view engine", "ejs");
+app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieSession({
   name: 'session',
   keys: ['key1', 'key2'],
   maxAge: 24 * 60 * 60 * 1000 // 24 hours
 }));
-
 
 
 app.listen(PORT, () => {
@@ -96,7 +96,6 @@ app.get("/register", (req, res) => {
 
 });
 
-
 //Render Login Page
 app.get("/login", (req, res) => {
   const loginInfo = {user: req.session.user};
@@ -108,7 +107,6 @@ app.get("/login", (req, res) => {
   }
 
 });
-
 
 //GET ENDPOINTS FOR ROUTE PARAMETERS
 
@@ -149,8 +147,6 @@ app.get("/u/:shortURL", (req, res) => {
 });
 
 
-
-
 /* POST ROUTES/ENDPOINTS
     | ==================================================================================== */
 
@@ -182,7 +178,6 @@ app.post("/urls/:shortURL", (req, res) => {
 
 });
 
-
 //delete shortURL from database
 app.post("/urls/:shortURL/delete", (req, res) => {
 
@@ -194,7 +189,6 @@ app.post("/urls/:shortURL/delete", (req, res) => {
   res.redirect("/urls");
 
 });
-
 
 //Register, adds new users to the database
 app.post("/register", (req, res) => {
@@ -215,7 +209,6 @@ app.post("/register", (req, res) => {
   res.redirect("/urls");
 
 });
-
 
 //login with user email and password checks
 app.post("/login", (req, res) => {
@@ -240,7 +233,6 @@ app.post("/logout", (req, res) => {
   req.session = null;
   res.redirect('/login');
 });
-
 
 /* HELPER FUNCTIONS
     | ========================================================================== */

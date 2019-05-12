@@ -4,55 +4,28 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <!-- Bootstrap CSS -->
+    <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <!-- Google Fonts -->
+ <link href="https://fonts.googleapis.com/css?family=Bungee|Righteous" rel="stylesheet">
+  <!-- Main styles -->
+ <link rel="stylesheet" type="text/css" href="../css/main.css">
 
   <title>TinyApp - Please Register</title>
-
-  <style>
-    html, body {
-      height: 100%;
-    }
-    .form-group {
-      width: 400px;
-    }
-    .container-fluid {
-      background: #d5f2f6; /* Old browsers */
-      background: -moz-linear-gradient(-45deg, #d5f2f6 0%, #c6e5e8 50%, #d3f2f5 100%); /* FF3.6-15 */
-      background: -webkit-linear-gradient(-45deg, #d5f2f6 0%,#c6e5e8 50%,#d3f2f5 100%); /* Chrome10-25,Safari5.1-6 */
-      background: linear-gradient(135deg, #d5f2f6 0%,#c6e5e8 50%,#d3f2f5 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    }
-    form {
-      background-color: #fff;
-      padding: 40px 40px;
-      border-radius: 10px;
-    }
-    .login-content p {
-      color: #a3a3a3;
-      font-size: 24px;
-      margin-bottom: 2em;
-    }
-    .button-group {
-      margin-top: 2em;
-    }
-    .button-group .btn {
-      padding: 12px 12px;
-      width: 160px;
-      margin-right: .5em;
-    }
-  </style>
 
 </head>
 
 <body>
   <div class="container-fluid h-100">
     <div class="row h-100 justify-content-center align-items-center">
-      <form class="shadow-sm" method="POST" action="/register">
+      <form class="login-form shadow-sm" method="POST" action="/register">
+
         <div class="form-group">
           <div class="login-content">
             <h1 class="display-5">Welcome to Tiny App</h1>
             <p>Shorten your URLs, Register Now!</p>
           </div>
+
           <label for="email">Email address</label>
           <input type="email" class="form-control" name="email" placeholder="Enter email">
         </div>
@@ -63,7 +36,7 @@
         </div>
 
          <div class="button-group">
-          <button type="submit" class="btn btn-primary btn-lg">Register</button>
+          <button type="submit" class="btn btn-primary register-btn btn-lg">Register</button>
         </div>
 
       </form>

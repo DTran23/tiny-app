@@ -8,34 +8,22 @@
 
   <title>TinyApp - A URL shortening App</title>
 
-  <style>
-    .form-content {
-      background-color: #fff;
-      border-radius: 5px;
-      padding: 40px 20px;
-    }
-    .form-content h5{
-      padding-bottom: 10px;
-    }
-  </style>
-
 </head>
-
 <body>
-
   <% include partials/_header %>
 
   <div class="container">
-    <div class="form-content shadow-sm">
-      <h5>Your TinyURL: <a href = "<%= longURL %>"> <%= shortURL %></a> for <%= longURL %> </h5>
+    <div class="form-container create-url shadow-sm">
+      <h5>Your TinyURL:
+          <a href = "<%= longURL %>"> <%= shortURL %></a> for
+          <span class="long-url"><%= longURL %> </span></h5>
         <!-- POST FORM for updating longURLs -->
       <form class="form-inline" method="POST" action="/urls/<%= shortURL %>">
         <input
-          class="form-control"
+          class="update-input"
           type="text"
           name="longURL"
-          placeholder="Enter new link to update your TinyURL"
-          style="width: 500px;"
+          placeholder="Enter new link to update your TinyURL";
         >
         <button type="submit" class="btn btn-primary btn-lg">Update</button>
         <a class="btn btn-primary btn-lg" href ="/urls">View All</a>

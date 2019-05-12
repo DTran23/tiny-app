@@ -6,51 +6,18 @@
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-
+  <!-- Google Fonts -->
  <link href="https://fonts.googleapis.com/css?family=Bungee|Righteous" rel="stylesheet">
+  <!-- Main styles -->
+ <link rel="stylesheet" type="text/css" href="../css/main.css">
 
   <title>TinyApp - Please Login</title>
-
-  <style>
-    html, body {
-      height: 100%;
-    }
-    .form-group {
-      width: 400px;
-    }
-    .container-fluid {
-      background: #d5f2f6; /* Old browsers */
-      background: -moz-linear-gradient(-45deg, #d5f2f6 0%, #c6e5e8 50%, #d3f2f5 100%); /* FF3.6-15 */
-      background: -webkit-linear-gradient(-45deg, #d5f2f6 0%,#c6e5e8 50%,#d3f2f5 100%); /* Chrome10-25,Safari5.1-6 */
-      background: linear-gradient(135deg, #d5f2f6 0%,#c6e5e8 50%,#d3f2f5 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    }
-    form {
-      background-color: #fff;
-      padding: 40px 40px;
-      border-radius: 10px;
-    }
-    .login-content p {
-      color: #a3a3a3;
-      font-size: 24px;
-      margin-bottom: 2em;
-    }
-    .button-group {
-      margin-top: 2em;
-    }
-    .button-group .btn {
-      padding: 12px 12px;
-      width: 160px;
-      margin-right: .5em;
-    }
-
-  </style>
-
 </head>
 
 <body>
   <div class="container-fluid h-100">
     <div class="row h-100 justify-content-center align-items-center">
-      <form class="shadow-sm" method="POST" action="/login">
+      <form class="login-form shadow-sm" method="POST" action="/login">
         <div class="form-group">
           <div class="login-content">
             <h1 class="display-5"> Welcome back!</h1>
@@ -65,8 +32,8 @@
           <input type="password" class="form-control" name="password" placeholder="Password">
         </div>
         <div class="button-group">
-          <button type="submit" class="btn btn-primary btn-lg">Login</button>
-          <a class="btn btn-primary btn-lg" href ="/register">Register</a>
+          <button type="submit" class="btn btn-primary login-btn btn-lg">Login</button>
+          <a class="btn btn-outline-primary register-btn btn-lg" href ="/register">Register</a>
         </div>
       </form>
   </div>

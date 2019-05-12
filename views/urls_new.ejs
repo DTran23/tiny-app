@@ -9,42 +9,26 @@
 
     <title>Create a new TinyApp URL</title>
 
-    <style>
-      .form-inline.create-url {
-        background-color: #fff;
-        border-radius: 5px;
-        padding: 20px 20px;
-      }
-      .form-control.create-input {
-        width: 500px;
-        margin: 1em;
-      }
-    </style>
-
   </head>
 
   <body>
     <% include partials/_header %>
     <div class="container">
+      <div class="form-container create-url shadow-sm">
+        <form class="form-inline" action="/urls" method="POST">
+            <h5>Enter a URL to shorten</h5>
+            <input
+              class="create-input"
+              type="text" name="longURL"
+              placeholder="http://"
+              required
+            >
 
-      <form class="form-inline create-url shadow-sm" action="/urls" method="POST">
+            <button type="submit" class="btn btn-primary btn-lg">Create</button>
 
-        <div class="form-group mb-2">
 
-          <label for="longURL">Enter a URL to shorten</label>
-
-          <input
-            class="form-control create-input"
-            type="text" name="longURL"
-            placeholder="http://"
-            required
-          >
-
-          <button type="submit" class="btn btn-primary btn-lg">Create</button>
-
-        </div>
-
-      </form>
+        </form>
+      </div>
   </div>
   </body>
 </html>

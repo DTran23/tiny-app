@@ -1,0 +1,231 @@
+
+/* GLOBAL STYLES
+    | ============================================================================
+    */
+html, body {
+  font-size: 20px;
+  color: #102a4f;
+  padding: 50px;
+  background-color: #d0edf0;
+}
+.container {
+  width: 1000px;
+}
+/* TYPOGRAPHY
+    | ============================================================================
+    */
+h1 {
+  color: #102a4f;
+
+}
+h5 {
+  margin-bottom: 1em;
+}
+.display-3 {
+  color: #fff;
+  font-family: 'Righteous', cursive;
+
+}
+
+.logo p {
+  color: #e8f0fa;
+  font-size: 32px;
+  margin: -10px 0px 0px 10px;
+}
+
+.login-name {
+  text-transform: uppercase;
+  font-family: 'Righteous', cursive;
+  color: #fff;
+  font-size: 18px;
+  margin-top: -3px;
+  letter-spacing: 1px;
+}
+
+.login-message {
+  padding: 20px 20px;
+  background-color: #fff;
+}
+
+.login-content p {
+  color: #a3a3a3;
+  font-size: 20px;
+  margin-bottom: 2em;
+}
+.long-url {
+  font-weight: 300;
+  color: #a3a3a3;
+}
+
+/* STRUCTURE
+    | ============================================================================
+    */
+.logo {
+  margin-left: 20px;
+}
+
+.navbar {
+  background-image: url(https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/artificial_intelligence_upfn.svg);
+  background-position: 140% 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #21254f;
+  margin-bottom: 2em;
+  display: flex;
+  height: 300px;
+  border-radius: 10px;
+}
+
+.img-thumbnail {
+  background-color: #102a4f;
+}
+
+.name {
+  margin-right: 20px;
+}
+
+
+.login-description {
+  color: #fff;
+  margin-bottom: 0px;
+  font-size: 14px;
+}
+
+.user-login {
+  margin-top: 110px;
+}
+
+/* BUTTON/LINKS
+    | ============================================================================
+    */
+a:hover {
+  text-decoration: none;
+}
+
+.btn-primary.logout {
+  width: 100%;
+  height: 50px;
+  align-content: bottom;
+  padding: 0px 0px;
+}
+
+.btn-primary.login-btn, .btn-primary.register-btn {
+  margin-left: 0px;
+}
+
+.btn-outline-primary {
+  border-color: #00b7eb;
+  color: #00b7eb;
+}
+
+.btn-outline-primary:hover {
+  background-color: #00a0e3;
+  border-color: #00a0e3;
+}
+
+.register-btn {
+  width: 130px;
+}
+
+.btn.btn-primary.logout {
+  border: none;
+  margin-left: 0px;
+}
+
+.button-group .btn {
+  width: 130px;
+  margin-right: 0.2em;
+}
+
+.btn-danger {
+  background-color: #fa6883;
+}
+
+.btn-danger:hover {
+  background-color: #dd435f;
+}
+
+.btn:focus {
+  outline: none;
+}
+.btn{
+  font-size: 18px;
+}
+
+.btn-primary {
+  background-color: #00b7eb;
+}
+
+.btn-primary:hover {
+  background-color: #00a0e3;
+}
+
+.btn-success {
+  padding: 1em 2em;
+}
+
+.btn-primary, .btn-danger {
+  width: 120px;
+  margin-left: 10px;
+  border: none;
+}
+
+
+
+/* TABLE STYLES
+    | ============================================================================
+    */
+thead {
+  background-color: #21254f;
+  color: #fff;
+}
+
+.table-hover tbody tr:hover td {
+    background: #e8f0fa;
+}
+
+.table {
+  background-color: #f7f7f7;
+  margin-top: 1em;
+}
+
+.table th, .table td {
+  padding-left: 50px;
+}
+
+th.options {
+  padding-left: 70px;
+}
+
+/* FORM STYLES
+    | ============================================================================
+    */
+form.login-form {
+  background-color: #fff;
+  padding: 2em 2em;
+  border-radius: 10px;
+  width: 45%;
+}
+
+.form-container.create-url {
+  margin-top: 1em;
+  background-color: #fff;
+  border-radius: .5em;
+  padding: 2em 2em;
+}
+
+input.create-input {
+  width: 80%;
+  margin-left: 0;
+}
+
+input.update-input {
+  width: 60%;
+}
+
+
+
+
+
+
+
