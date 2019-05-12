@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const PORT = 8080; // default port 8080
+const PORT = 5000; // default port 8080
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 
@@ -144,15 +144,14 @@ app.post("/register", (req, res) => {
   const {email, password} = req.body;
 
   if(email === "" || password === ""){
-    res.sendStatus(400);
+    res.status(400).send('Fields not filled out');
   }
 
   if(emailLookup(email)) {
-    res.sendStatus(400);
+    res.status(400);
   }
 
   const userId = addNewUser(email, password);
-
   res.cookie('user_id', userId);
   res.redirect("/urls");
 
@@ -213,15 +212,15 @@ const emailLookup = (emailInfo) => {
 const addNewUser = (email, password) => {
   const id = generateRandomString();
 
-  const user = {
+  const newUser = {
     id,
     email,
     password,
   }
 
-  usersDatabase[id] = user;
+  usersDatabase[id] = newUser;
 
-  return id;
+  return usersDatabase[id];
 }
 
 // const urlsForUser = (id) => {
