@@ -1,14 +1,23 @@
 const express = require("express");
 const app = express();
-const PORT = 5000; // default port 8080
+const PORT = 8080; // default port 8080
 const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
 const bcrypt = require('bcrypt');
 const saltRounds = 12;
+const cookieSession = require('cookie-session')
+
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(cookieParser());
+app.use(cookieSession({
+  name: 'session',
+  keys: ['key1', 'key2'],
+
+  // Cookie Options
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}))
+
+
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
@@ -54,12 +63,12 @@ app.get("/hello", (req, res) => {
 
 app.get("/urls", (req, res) => {
 
-  if(req.cookies.user_id === undefined || !usersDatabase[req.cookies.user_id.id]){
+  if(req.session.user === undefined || !usersDatabase[req.session.user.id]){
     res.send('Please register or log in first');
   }
 
-  const userURLs = urlsForUser(req.cookies.user_id.id);
-  const urls = {urls: userURLs, user: req.cookies['user_id']};
+  const userURLs = urlsForUser(req.session.user.id);
+  const urls = {urls: userURLs, user: req.session.user};
 
   res.render("urls_index", urls);
 
@@ -67,9 +76,9 @@ app.get("/urls", (req, res) => {
 });
 
 app.get("/urls/new", (req, res) => {
-  const loginId = {user: req.cookies['user_id']};
+  const loginId = {user: req.session.user};
 
-  if(req.cookies.user_id === undefined){
+  if(req.session.user === undefined){
     res.redirect("/login")
   }
 
@@ -78,14 +87,14 @@ app.get("/urls/new", (req, res) => {
 
 //Render Register Page
 app.get("/register", (req, res) => {
-  const registerInfo = {user: req.cookies['user_id']};
+  const registerInfo = {user: req.session.user};
   res.render("register", registerInfo)
 });
 
 
 //Render Login Page
 app.get("/login", (req, res) => {
-  const loginInfo = {user: req.cookies['user_id']};
+  const loginInfo = {user: req.session.user};
 
   res.render("login", loginInfo)
 });
@@ -97,11 +106,11 @@ app.get("/urls/:shortURL", (req, res) => {
   let templateVars = {
     shortURL: req.params.shortURL,
     longURL: urlDatabase[req.params.shortURL].longURL,
-    user: req.cookies['user_id'],
+    user: req.session.user,
     urls: urlDatabase
   };
 
-  if(req.cookies.user_id === undefined || !usersDatabase[req.cookies.user_id.id]){
+  if(req.session.user === undefined || !usersDatabase[req.session.user.id]){
     res.send('Please register or log in first');
   }
 
@@ -112,7 +121,6 @@ app.get("/urls/:shortURL", (req, res) => {
 //Redirects any requests to its longURL
 app.get("/u/:shortURL", (req, res) => {
   const longURL = urlDatabase[req.params.shortURL].longURL;
-
   res.redirect(longURL);
 });
 
@@ -126,7 +134,7 @@ app.get("/u/:shortURL", (req, res) => {
 app.post("/urls", (req, res) => {
   const shortURL = generateRandomString();
   const longURL = req.body.longURL;
-  const userID = req.cookies.user_id.id;
+  const userID = req.session.user.id;
 
   urlDatabase[shortURL] = {
     longURL,
@@ -140,7 +148,7 @@ app.post("/urls", (req, res) => {
 //update longURLs
 app.post("/urls/:shortURL", (req, res) => {
 
-  if(req.cookies.user_id === undefined || !usersDatabase[req.cookies.user_id.id]){
+  if(req.session.user === undefined || !usersDatabase[req.session.user.id]){
     res.send('Cannot update, you are not the owner of this Tiny URL');
   }
 
@@ -152,7 +160,7 @@ app.post("/urls/:shortURL", (req, res) => {
 //delete shortURL from database
 app.post("/urls/:shortURL/delete", (req, res) => {
 
-  if(req.cookies.user_id === undefined || !usersDatabase[req.cookies.user_id.id]){
+  if(req.session.user === undefined || !usersDatabase[req.session.user.id]){
     res.send('You are not the owner of this Tiny URL');
   }
 
@@ -175,7 +183,8 @@ app.post("/register", (req, res) => {
   }
 
   const userId = addNewUser(email, hashedPass);
-  res.cookie('user_id', userId);
+
+  req.session.user = userId;
   res.redirect("/urls");
 
 });
@@ -188,7 +197,7 @@ app.post("/login", (req, res) => {
 
   if(emailLookup(email)) {
     if(passwordCheck(password)){
-      res.cookie('user_id', userId);
+      req.session.user = userId;
       res.redirect('/urls');
     } else {
       res.status(403).send('Password does not match');
@@ -200,7 +209,7 @@ app.post("/login", (req, res) => {
 
 //logout clear cookie and redirect to main page
 app.post("/logout", (req, res) => {
-  res.clearCookie('user_id')
+  req.session = null;
   res.redirect('/urls');
 });
 
