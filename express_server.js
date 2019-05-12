@@ -3,6 +3,8 @@ const app = express();
 const PORT = 5000; // default port 8080
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+const bcrypt = require('bcrypt');
+const saltRounds = 12;
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
@@ -11,6 +13,7 @@ app.use(cookieParser());
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
+
 
 
 /* DATABASES
@@ -161,6 +164,7 @@ app.post("/urls/:shortURL/delete", (req, res) => {
 //Register, adds new users to the database
 app.post("/register", (req, res) => {
   const {email, password} = req.body;
+  const hashedPass = bcrypt.hashSync(password, saltRounds);
 
   if(email === "" || password === ""){
     res.status(400).send('Fields not filled out');
@@ -170,7 +174,7 @@ app.post("/register", (req, res) => {
     res.status(400).send('Email is already registered');
   }
 
-  const userId = addNewUser(email, password);
+  const userId = addNewUser(email, hashedPass);
   res.cookie('user_id', userId);
   res.redirect("/urls");
 
@@ -231,7 +235,7 @@ const userLookup = (username) => {
 //Password check in user Database
 const passwordCheck = (password) => {
   for(let user in usersDatabase) {
-    if(usersDatabase[user].password === password){
+    if(bcrypt.compareSync(password, usersDatabase[user].password)){
       return true;
     }
   }
@@ -253,7 +257,6 @@ const addNewUser = (email, password) => {
   return usersDatabase[id];
 };
 
-
 //Returns URLs that belong to the user
 const urlsForUser = (userID) => {
   let urls = {};
@@ -264,4 +267,5 @@ const urlsForUser = (userID) => {
   }
   return urls;
 }
+
 
