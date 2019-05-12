@@ -47,12 +47,23 @@ const usersDatabase = {
 /* GET ROUTES/ENDPOINTS
     | ==================================================================================== */
 
+//if logged in redirect to login page else redirect to urls page
+app.get("/", (req, res) => {
+
+  if(req.session.user === undefined) {
+    res.redirect("/login");
+  } else {
+    res.redirect("/urls");
+  }
+
+});
+
 //display all URLs if logged in else send error message
 app.get("/urls", (req, res) => {
 
-  if(req.session.user === undefined || !usersDatabase[req.session.user.id]){
+  if(req.session.user === undefined) {
     res.send('Please register or log in first');
-  };
+  }
 
   const userURLs = urlsForUser(req.session.user.id);
   const urls = {urls: userURLs, user: req.session.user};
@@ -65,18 +76,24 @@ app.get("/urls", (req, res) => {
 app.get("/urls/new", (req, res) => {
   const loginId = {user: req.session.user};
 
-  if(req.session.user === undefined){
+  if(req.session.user === undefined) {
     res.redirect("/login");
-  };
+  }
 
   res.render("urls_new", loginId);
+
 });
 
 //Render Register Page
 app.get("/register", (req, res) => {
   const registerInfo = {user: req.session.user};
 
-  res.render("register", registerInfo);
+  if(req.session.user) {
+    res.redirect("/urls")
+  } else {
+    res.render("register", registerInfo);
+  }
+
 });
 
 
@@ -84,7 +101,12 @@ app.get("/register", (req, res) => {
 app.get("/login", (req, res) => {
   const loginInfo = {user: req.session.user};
 
-  res.render("login", loginInfo);
+  if(req.session.user) {
+    res.redirect("/urls")
+  } else {
+    res.render("login", loginInfo);
+  }
+
 });
 
 
@@ -92,13 +114,13 @@ app.get("/login", (req, res) => {
 
 app.get("/urls/:shortURL", (req, res) => {
 
-  if(req.session.user === undefined || !usersDatabase[req.session.user.id]){
+  if(req.session.user === undefined || !usersDatabase[req.session.user.id]) {
     res.send('Please register or log in first');
   };
 
   const userURLs = urlsForUser(req.session.user.id);
 
-  if(urlDatabase[req.params.shortURL] !== userURLs[req.params.shortURL]){
+  if(urlDatabase[req.params.shortURL] !== userURLs[req.params.shortURL]) {
     res.send('This is not your TinyURL!');
   };
 
@@ -117,7 +139,7 @@ app.get("/urls/:shortURL", (req, res) => {
 app.get("/u/:shortURL", (req, res) => {
   const userURLs = urlsForUser(req.session.user.id);
 
-  if(!userURLs[req.params.shortURL]){
+  if(!userURLs[req.params.shortURL]) {
     res.send('This TinyURL does not exist!')
   } else {
     const longURL = urlDatabase[req.params.shortURL].longURL;
@@ -145,6 +167,7 @@ app.post("/urls", (req, res) => {
 
   res.status(200);
   res.redirect(`/urls/${shortURL}`);
+
 });
 
 //update longURLs
@@ -152,10 +175,11 @@ app.post("/urls/:shortURL", (req, res) => {
 
   if(req.session.user === undefined || !usersDatabase[req.session.user.id]){
     res.send('Cannot update, you are not the owner of this Tiny URL');
-  };
+  }
 
   urlDatabase[req.params.shortURL].longURL = req.body.longURL;
   res.redirect("/urls");
+
 });
 
 
@@ -164,10 +188,11 @@ app.post("/urls/:shortURL/delete", (req, res) => {
 
   if(req.session.user === undefined || !usersDatabase[req.session.user.id]){
     res.send('You are not the owner of this Tiny URL');
-  };
+  }
 
   delete urlDatabase[req.params.shortURL];
   res.redirect("/urls");
+
 });
 
 
@@ -176,20 +201,18 @@ app.post("/register", (req, res) => {
   const {email, password} = req.body;
   const hashedPass = bcrypt.hashSync(password, saltRounds);
 
-
-  if(email === "" || password === ""){
+  if(email === "" || password === "") {
     res.status(400).send('Fields not filled out');
-  };
+  }
 
   if(emailLookup(email)) {
     res.status(400).send('Email is already registered');
-  };
+  }
 
   const userId = addNewUser(email, hashedPass);
 
   req.session.user = userId;
   res.redirect("/urls");
-
 
 });
 
@@ -209,6 +232,7 @@ app.post("/login", (req, res) => {
   } else {
     res.status(403).send('Email is not registered');
   }
+
 });
 
 //logout clear cookie and redirect to main page
@@ -229,29 +253,35 @@ const generateRandomString = () => {
 //Check for email in database
 const emailLookup = (email) => {
   for(let user in usersDatabase) {
+
     if(usersDatabase[user].email === email){
       return true;
-    };
-  };
+    }
+
+  }
   return false;
 };
 
 //User lookup in user Database
 const userLookup = (username) => {
   for(let user in usersDatabase) {
+
     if(usersDatabase[user].email === username){
       return usersDatabase[user];
-    };
-  };
+    }
+
+  }
 };
 
 //Password check in user Database
 const passwordCheck = (password) => {
   for(let user in usersDatabase) {
+
     if(bcrypt.compareSync(password, usersDatabase[user].password)){
       return true;
-    };
-  };
+    }
+
+  }
   return false;
 };
 
@@ -272,11 +302,14 @@ const addNewUser = (email, password) => {
 //Returns URLs that belong to the user
 const urlsForUser = (userID) => {
   let urls = {};
+
   for(let shortURL in urlDatabase){
+
     if(urlDatabase[shortURL].userID === userID){
       urls[shortURL] = urlDatabase[shortURL];
-    };
-  };
+    }
+
+  }
   return urls;
 };
 

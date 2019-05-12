@@ -26,13 +26,25 @@
   <body>
     <% include partials/_header %>
     <div class="container">
-    <form class="form-inline create-url shadow-sm" action="/urls" method="POST">
-      <div class="form-group mb-2">
-        <label for="longURL">Enter a URL to shorten</label>
-        <input class="form-control create-input" type="text" name="longURL" placeholder="http://">
-        <button type="submit" class="btn btn-primary btn-lg">Create</button>
-      </div>
-    </form>
+
+      <form class="form-inline create-url shadow-sm" action="/urls" method="POST">
+
+        <div class="form-group mb-2">
+
+          <label for="longURL">Enter a URL to shorten</label>
+
+          <input
+            class="form-control create-input"
+            type="text" name="longURL"
+            placeholder="http://"
+            required
+          >
+
+          <button type="submit" class="btn btn-primary btn-lg">Create</button>
+
+        </div>
+
+      </form>
   </div>
   </body>
 </html>

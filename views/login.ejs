@@ -7,6 +7,8 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
+ <link href="https://fonts.googleapis.com/css?family=Bungee|Righteous" rel="stylesheet">
+
   <title>TinyApp - Please Login</title>
 
   <style>
@@ -27,6 +29,20 @@
       padding: 40px 40px;
       border-radius: 10px;
     }
+    .login-content p {
+      color: #a3a3a3;
+      font-size: 24px;
+      margin-bottom: 2em;
+    }
+    .button-group {
+      margin-top: 2em;
+    }
+    .button-group .btn {
+      padding: 12px 12px;
+      width: 160px;
+      margin-right: .5em;
+    }
+
   </style>
 
 </head>
@@ -36,6 +52,10 @@
     <div class="row h-100 justify-content-center align-items-center">
       <form class="shadow-sm" method="POST" action="/login">
         <div class="form-group">
+          <div class="login-content">
+            <h1 class="display-5"> Welcome back!</h1>
+            <p>Please login to your account</p>
+          </div>
           <label for="email">Email address</label>
           <input type="email" class="form-control" name="email" placeholder="Enter email">
         </div>
@@ -44,9 +64,10 @@
           <label for="password">Password</label>
           <input type="password" class="form-control" name="password" placeholder="Password">
         </div>
-        <button type="submit" class="btn btn-primary btn-lg">Login</button>
-        <a class="btn btn-primary btn-lg" href ="/register">Register</a>
-
+        <div class="button-group">
+          <button type="submit" class="btn btn-primary btn-lg">Login</button>
+          <a class="btn btn-primary btn-lg" href ="/register">Register</a>
+        </div>
       </form>
   </div>
 </div>

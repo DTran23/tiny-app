@@ -27,6 +27,19 @@
       padding: 40px 40px;
       border-radius: 10px;
     }
+    .login-content p {
+      color: #a3a3a3;
+      font-size: 24px;
+      margin-bottom: 2em;
+    }
+    .button-group {
+      margin-top: 2em;
+    }
+    .button-group .btn {
+      padding: 12px 12px;
+      width: 160px;
+      margin-right: .5em;
+    }
   </style>
 
 </head>
@@ -36,6 +49,10 @@
     <div class="row h-100 justify-content-center align-items-center">
       <form class="shadow-sm" method="POST" action="/register">
         <div class="form-group">
+          <div class="login-content">
+            <h1 class="display-5">Welcome to Tiny App</h1>
+            <p>Shorten your URLs, Register Now!</p>
+          </div>
           <label for="email">Email address</label>
           <input type="email" class="form-control" name="email" placeholder="Enter email">
         </div>
@@ -45,7 +62,10 @@
           <input type="password" class="form-control" name="password" placeholder="Password">
         </div>
 
-        <button type="submit" class="btn btn-success btn-lg">Register</button>
+         <div class="button-group">
+          <button type="submit" class="btn btn-primary btn-lg">Register</button>
+        </div>
+
       </form>
     </div>
   </div>
