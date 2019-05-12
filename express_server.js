@@ -1,10 +1,10 @@
 const express = require("express");
 const app = express();
-const PORT = 8080; // default port 8080
+const PORT = 8080;
 const bodyParser = require("body-parser");
 const bcrypt = require('bcrypt');
 const saltRounds = 12;
-const cookieSession = require('cookie-session')
+const cookieSession = require('cookie-session');
 
 
 app.set("view engine", "ejs");
@@ -12,10 +12,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieSession({
   name: 'session',
   keys: ['key1', 'key2'],
-
-  // Cookie Options
   maxAge: 24 * 60 * 60 * 1000 // 24 hours
-}))
+}));
 
 
 
@@ -49,38 +47,27 @@ const usersDatabase = {
 /* GET ROUTES/ENDPOINTS
     | ==================================================================================== */
 
-app.get("/", (req, res) => {
-  res.send("Hello!");
-});
-
-app.get("/urls.json", (req, res) => {
-  res.json(urlDatabase);
-});
-
-app.get("/hello", (req, res) => {
-  res.send("<html><body>Hello <b>World</b></body></html>\n");
-});
-
+//display all URLs if logged in else send error message
 app.get("/urls", (req, res) => {
 
   if(req.session.user === undefined || !usersDatabase[req.session.user.id]){
     res.send('Please register or log in first');
-  }
+  };
 
   const userURLs = urlsForUser(req.session.user.id);
   const urls = {urls: userURLs, user: req.session.user};
 
   res.render("urls_index", urls);
 
-
 });
 
+//Render create new URL page if logged in, else redirect to log in
 app.get("/urls/new", (req, res) => {
   const loginId = {user: req.session.user};
 
   if(req.session.user === undefined){
-    res.redirect("/login")
-  }
+    res.redirect("/login");
+  };
 
   res.render("urls_new", loginId);
 });
@@ -88,7 +75,8 @@ app.get("/urls/new", (req, res) => {
 //Render Register Page
 app.get("/register", (req, res) => {
   const registerInfo = {user: req.session.user};
-  res.render("register", registerInfo)
+
+  res.render("register", registerInfo);
 });
 
 
@@ -96,13 +84,24 @@ app.get("/register", (req, res) => {
 app.get("/login", (req, res) => {
   const loginInfo = {user: req.session.user};
 
-  res.render("login", loginInfo)
+  res.render("login", loginInfo);
 });
 
 
 //GET ENDPOINTS FOR ROUTE PARAMETERS
 
 app.get("/urls/:shortURL", (req, res) => {
+
+  if(req.session.user === undefined || !usersDatabase[req.session.user.id]){
+    res.send('Please register or log in first');
+  };
+
+  const userURLs = urlsForUser(req.session.user.id);
+
+  if(urlDatabase[req.params.shortURL] !== userURLs[req.params.shortURL]){
+    res.send('This is not your TinyURL!');
+  };
+
   let templateVars = {
     shortURL: req.params.shortURL,
     longURL: urlDatabase[req.params.shortURL].longURL,
@@ -110,18 +109,21 @@ app.get("/urls/:shortURL", (req, res) => {
     urls: urlDatabase
   };
 
-  if(req.session.user === undefined || !usersDatabase[req.session.user.id]){
-    res.send('Please register or log in first');
-  }
-
-    res.render("urls_show", templateVars);
+  res.render("urls_show", templateVars);
 
 });
 
 //Redirects any requests to its longURL
 app.get("/u/:shortURL", (req, res) => {
-  const longURL = urlDatabase[req.params.shortURL].longURL;
-  res.redirect(longURL);
+  const userURLs = urlsForUser(req.session.user.id);
+
+  if(!userURLs[req.params.shortURL]){
+    res.send('This TinyURL does not exist!')
+  } else {
+    const longURL = urlDatabase[req.params.shortURL].longURL;
+    res.redirect(longURL);
+  }
+
 });
 
 
@@ -150,7 +152,7 @@ app.post("/urls/:shortURL", (req, res) => {
 
   if(req.session.user === undefined || !usersDatabase[req.session.user.id]){
     res.send('Cannot update, you are not the owner of this Tiny URL');
-  }
+  };
 
   urlDatabase[req.params.shortURL].longURL = req.body.longURL;
   res.redirect("/urls");
@@ -162,7 +164,7 @@ app.post("/urls/:shortURL/delete", (req, res) => {
 
   if(req.session.user === undefined || !usersDatabase[req.session.user.id]){
     res.send('You are not the owner of this Tiny URL');
-  }
+  };
 
   delete urlDatabase[req.params.shortURL];
   res.redirect("/urls");
@@ -174,18 +176,20 @@ app.post("/register", (req, res) => {
   const {email, password} = req.body;
   const hashedPass = bcrypt.hashSync(password, saltRounds);
 
+
   if(email === "" || password === ""){
     res.status(400).send('Fields not filled out');
-  }
+  };
 
   if(emailLookup(email)) {
     res.status(400).send('Email is already registered');
-  }
+  };
 
   const userId = addNewUser(email, hashedPass);
 
   req.session.user = userId;
   res.redirect("/urls");
+
 
 });
 
@@ -210,7 +214,7 @@ app.post("/login", (req, res) => {
 //logout clear cookie and redirect to main page
 app.post("/logout", (req, res) => {
   req.session = null;
-  res.redirect('/urls');
+  res.redirect('/login');
 });
 
 
@@ -227,8 +231,8 @@ const emailLookup = (email) => {
   for(let user in usersDatabase) {
     if(usersDatabase[user].email === email){
       return true;
-    }
-  }
+    };
+  };
   return false;
 };
 
@@ -237,8 +241,8 @@ const userLookup = (username) => {
   for(let user in usersDatabase) {
     if(usersDatabase[user].email === username){
       return usersDatabase[user];
-    }
-  }
+    };
+  };
 };
 
 //Password check in user Database
@@ -246,8 +250,8 @@ const passwordCheck = (password) => {
   for(let user in usersDatabase) {
     if(bcrypt.compareSync(password, usersDatabase[user].password)){
       return true;
-    }
-  }
+    };
+  };
   return false;
 };
 
@@ -262,7 +266,6 @@ const addNewUser = (email, password) => {
   }
 
   usersDatabase[id] = newUser;
-
   return usersDatabase[id];
 };
 
@@ -272,9 +275,9 @@ const urlsForUser = (userID) => {
   for(let shortURL in urlDatabase){
     if(urlDatabase[shortURL].userID === userID){
       urls[shortURL] = urlDatabase[shortURL];
-    }
-  }
+    };
+  };
   return urls;
-}
+};
 
 
