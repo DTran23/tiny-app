@@ -75,8 +75,10 @@ app.get("/register", (req, res) => {
 //Render Login Page
 app.get("/login", (req, res) => {
   const loginInfo = {user: req.cookies['user_id']};
+
   res.render("login", loginInfo)
 });
+
 
 //GET ENDPOINTS FOR ROUTE PARAMETERS
 
@@ -161,26 +163,18 @@ app.post("/register", (req, res) => {
 //login with user email and password checks
 app.post("/login", (req, res) => {
   const {email, password} = req.body;
-  let user_id;
-  let foundUser = false;
+  const userId = userLookup(username = email);
 
-  for(let user in usersDatabase){
-    if(email === usersDatabase[user].email){
-      if (password === usersDatabase[user].password) {
-        user_id = usersDatabase[user];
-        foundUser = true;
-      }
+  if(emailLookup(email)) {
+    if(passwordCheck(password)){
+      res.cookie('user_id', userId);
+      res.redirect('/urls');
+    } else {
+      res.status(403).send('Password does not match');
     }
-  }
-
-  if (foundUser) {
-    res.cookie('user_id', user_id);
-    res.redirect('/urls');
   } else {
-    res.sendStatus(403)
-    res.redirect('/login');
+    res.status(403).send('Email is not registered');
   }
-
 });
 
 //logout clear cookie and redirect to main page
@@ -199,9 +193,28 @@ const generateRandomString = () => {
 };
 
 //Check for email in database
-const emailLookup = (emailInfo) => {
+const emailLookup = (email) => {
   for(let user in usersDatabase) {
-    if(usersDatabase[user].email === emailInfo){
+    if(usersDatabase[user].email === email){
+      return true;
+    }
+  }
+  return false;
+};
+
+//User lookup in user Database
+const userLookup = (username) => {
+  for(let user in usersDatabase) {
+    if(usersDatabase[user].email === username){
+      return usersDatabase[user];
+    }
+  }
+};
+
+//Password check in user Database
+const passwordCheck = (password) => {
+  for(let user in usersDatabase) {
+    if(usersDatabase[user].password === password){
       return true;
     }
   }
@@ -221,7 +234,7 @@ const addNewUser = (email, password) => {
   usersDatabase[id] = newUser;
 
   return usersDatabase[id];
-}
+};
 
 // const urlsForUser = (id) => {
 //   let url = [];
