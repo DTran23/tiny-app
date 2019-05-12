@@ -17,7 +17,7 @@
 
   <div class="container">
   <!-- if no username, display login message -->
-    <% if(!username) { %>
+    <% if(!user){ %>
       <div class="login-message shadow-sm">
         <th>Please log in or register </th>
       </div>
@@ -35,8 +35,9 @@
 
     <!-- display URLs in table format -->
       <% for (let url in urls) { %>
-        <% if(urls[url].userId === username.id) { %>
+        <% if(urls[url].userId === user.id) { %>
           <tbody">
+            <!-- form for delete  -->
             <form method="POST" action="/urls/<%= url %>/delete">
               <td><%= url %></td>
               <td><%= urls[url].longURL %></td>

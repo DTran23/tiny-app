@@ -50,13 +50,13 @@ app.get("/hello", (req, res) => {
 });
 
 app.get("/urls", (req, res) => {
-  const urls = {urls: urlDatabase, username: req.cookies['user_id']};
+  const urls = {urls: urlDatabase, user: req.cookies['user_id']};
 
   res.render("urls_index", urls);
 });
 
 app.get("/urls/new", (req, res) => {
-  const loginId = {username: req.cookies['user_id']};
+  const loginId = {user: req.cookies['user_id']};
 
   if(req.cookies.user_id === undefined){
     res.redirect("/login")
@@ -67,14 +67,14 @@ app.get("/urls/new", (req, res) => {
 
 //Render Register Page
 app.get("/register", (req, res) => {
-  const registerInfo = {username: req.cookies['user_id']};
+  const registerInfo = {user: req.cookies['user_id']};
   res.render("register", registerInfo)
 });
 
 
 //Render Login Page
 app.get("/login", (req, res) => {
-  const loginInfo = {username: req.cookies['user_id']};
+  const loginInfo = {user: req.cookies['user_id']};
   res.render("login", loginInfo)
 });
 
@@ -84,7 +84,7 @@ app.get("/urls/:shortURL", (req, res) => {
   let templateVars = {
     shortURL: req.params.shortURL,
     longURL: urlDatabase[req.params.shortURL],
-    username: req.cookies['user_id'],
+    user: req.cookies['user_id'],
     urls: urlDatabase
   };
 
@@ -148,7 +148,7 @@ app.post("/register", (req, res) => {
   }
 
   if(emailLookup(email)) {
-    res.status(400);
+    res.status(400).send('Email is already registered');
   }
 
   const userId = addNewUser(email, password);

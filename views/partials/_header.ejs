@@ -137,11 +137,11 @@ th.options {
       <p class="display-4">Shorten your URLs</p>
     </div>
     <!-- if username exists, show login info else show login, register link -->
-    <% if(username) { %>
+    <% if(user){ %>
       <form class="form-inline" method="POST" action="/logout">
         <div class="name">
           <p class="login-description">Logged in as</p>
-          <p class="login-name"><%= username.email %></p>
+          <p class="login-name"><%= user.email %></p>
           <button type="submit" class="btn btn-primary logout">Logout</button>
         </div>
       </form>
