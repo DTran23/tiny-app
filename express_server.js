@@ -50,9 +50,17 @@ app.get("/hello", (req, res) => {
 });
 
 app.get("/urls", (req, res) => {
-  const urls = {urls: urlDatabase, user: req.cookies['user_id']};
+
+  if(req.cookies.user_id === undefined || !usersDatabase[req.cookies.user_id.id]){
+    res.send('Please register or log in first');
+  }
+
+  const userURLs = urlsForUser(req.cookies.user_id.id);
+  const urls = {urls: userURLs, user: req.cookies['user_id']};
 
   res.render("urls_index", urls);
+
+
 });
 
 app.get("/urls/new", (req, res) => {
@@ -85,16 +93,16 @@ app.get("/login", (req, res) => {
 app.get("/urls/:shortURL", (req, res) => {
   let templateVars = {
     shortURL: req.params.shortURL,
-    longURL: urlDatabase[req.params.shortURL],
+    longURL: urlDatabase[req.params.shortURL].longURL,
     user: req.cookies['user_id'],
     urls: urlDatabase
   };
 
-  if(req.cookies.user_id === undefined){
-    res.sendStatus(400)
-  } else {
-    res.render("urls_show", templateVars);
+  if(req.cookies.user_id === undefined || !usersDatabase[req.cookies.user_id.id]){
+    res.send('Please register or log in first');
   }
+
+    res.render("urls_show", templateVars);
 
 });
 
@@ -115,11 +123,11 @@ app.get("/u/:shortURL", (req, res) => {
 app.post("/urls", (req, res) => {
   const shortURL = generateRandomString();
   const longURL = req.body.longURL;
-  const userId = req.cookies.user_id.id;
+  const userID = req.cookies.user_id.id;
 
   urlDatabase[shortURL] = {
     longURL,
-    userId
+    userID
   };
 
   res.status(200);
@@ -128,14 +136,23 @@ app.post("/urls", (req, res) => {
 
 //update longURLs
 app.post("/urls/:shortURL", (req, res) => {
-  urlDatabase[req.params.shortURL].longURL = req.body.longURL;
 
+  if(req.cookies.user_id === undefined || !usersDatabase[req.cookies.user_id.id]){
+    res.send('Cannot update, you are not the owner of this Tiny URL');
+  }
+
+  urlDatabase[req.params.shortURL].longURL = req.body.longURL;
   res.redirect("/urls");
 });
 
 
 //delete shortURL from database
 app.post("/urls/:shortURL/delete", (req, res) => {
+
+  if(req.cookies.user_id === undefined || !usersDatabase[req.cookies.user_id.id]){
+    res.send('You are not the owner of this Tiny URL');
+  }
+
   delete urlDatabase[req.params.shortURL];
   res.redirect("/urls");
 });
@@ -236,13 +253,15 @@ const addNewUser = (email, password) => {
   return usersDatabase[id];
 };
 
-// const urlsForUser = (id) => {
-//   let url = [];
-//   for(let shortURL in urlDatabase){
-//     if(urlDatabase[shortURL].userID === req.cookies.user_id.id){
-//       url.push(urlDatabase[shortURL].longURL)
-//     }
-//   }
-//   return url;
-// }
+
+//Returns URLs that belong to the user
+const urlsForUser = (userID) => {
+  let urls = {};
+  for(let shortURL in urlDatabase){
+    if(urlDatabase[shortURL].userID === userID){
+      urls[shortURL] = urlDatabase[shortURL];
+    }
+  }
+  return urls;
+}
 

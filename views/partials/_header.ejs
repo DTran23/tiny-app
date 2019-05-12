@@ -19,7 +19,7 @@ height: 100vh;
 .container {
   width: 1000px;
 }
-.display-1 {
+.display-3 {
   color: #fff;
   font-family: 'Righteous', cursive;
 
@@ -30,7 +30,7 @@ height: 100vh;
 .logo p {
   color: #e8f0fa;
   font-size: 32px;
-  margin: -10px 0px 0px 20px;
+  margin: -10px 0px 0px 10px;
 }
 a:hover {
   text-decoration: none;
@@ -46,7 +46,9 @@ thead {
   margin-bottom: 40px;
   padding: 20px 20px;
   background-image: url(https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/artificial_intelligence_upfn.svg);
-  background-position: -170% 44%;
+  background-position: 140% 44%;
+  background-size: 95%;
+  background-repeat: no-repeat;
   height: 280px;
   display: flex;
 }
@@ -88,8 +90,11 @@ thead {
 .img-thumbnail {
   background-color: #102a4f;
 }
+.name {
+  margin-right: 20px;
+}
 .logout {
-  width: 180px;
+  width: 100%;
   height: 60px;
   align-content: bottom;
   padding: 0px 0px;
@@ -99,12 +104,14 @@ thead {
   margin-bottom: 0px;
   font-size: 14px;
 }
+
 .login-name {
   text-transform: uppercase;
   font-family: 'Righteous', cursive;
   color: #fff;
-  font-size: 30px;
-  margin-top: -5px;
+  font-size: 18px;
+  margin-top: -3px;
+  letter-spacing: 1px;
 }
 
 .btn.btn-primary.logout {
@@ -127,13 +134,14 @@ th.options {
   padding: 20px 20px;
   background-color: #fff;
 }
+
 </style>
 
 <div class="container">
   <nav class="navbar navbar-inverse">
     <!-- logo and tagline -->
     <div class="logo">
-      <a href="/urls"><h1 class="display-1">Tiny App</h1></a>
+      <a href="/urls"><h1 class="display-3">Tiny App</h1></a>
       <p class="display-4">Shorten your URLs</p>
     </div>
     <!-- if username exists, show login info else show login, register link -->
